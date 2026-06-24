@@ -15,19 +15,43 @@ if con is None:
 
 
 def add_game():
+    global con
     print("\n=== Add New Board Game ===")
     gamename = input("Enter the name of the game: ")
-    maxplayers = int(input("Enter the maximum number of players: "))
+    try:
+        maxplayers = int(input("Enter the maximum number of players: "))
+    except ValueError:
+        print("Invalid number for maximum players")
+        return
     result = input("Enter the result of the game (win/loss/draw): ")
-    gameduration = int(input("Enter the duration of the game in minutes: "))
-    maxscore = int(input("Enter the maximum score of the game: "))
+    try:
+        gameduration = int(input("Enter the duration of the game in minutes: "))
+        maxscore = int(input("Enter the maximum score of the game: "))
+    except ValueError:
+        print("Invalid number for duration or max score")
+        return
 
-    sql = "INSERT INTO boardgames (gamename, maxplayers, result, gameduration, maxscore) VALUES ('%s', %d, '%s', %d, %d)" % (gamename, maxplayers, result, gameduration, maxscore)
+    # ensure connection is available
+    try:
+        if not con.is_connected():
+            print("DB connection lost; reconnecting...")
+            con = DBConnection(mycreds.connectionstring, mycreds.username, mycreds.password, mycreds.database)
+            if con is None:
+                print("Failed to reconnect to DB.")
+                return
+    except Exception:
+        # if con is None or doesn't have is_connected
+        con = DBConnection(mycreds.connectionstring, mycreds.username, mycreds.password, mycreds.database)
+        if con is None:
+            print("Failed to connect to DB.")
+            return
 
-    # parameterized query
+    sql = "INSERT INTO boardgames (gamename, maxplayers, result, gameduration, maxscore) VALUES (%s, %s, %s, %s, %s)"
+    params = (gamename, maxplayers, result, gameduration, maxscore)
+
     cursor = con.cursor()
     try:
-        cursor.execute(sql, (gamename, maxplayers, result, gameduration, maxscore))
+        cursor.execute(sql, params)
         con.commit()
         print("Game added successfully!")
     except Exception as e:
