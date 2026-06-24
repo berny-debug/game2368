@@ -1,5 +1,7 @@
 class creds:
-    connectionstring='cis2368su26.cr5hmmrktwkl.us-east-1.rds.amazonaws.com'
+    connectionstring='cis2368.c8j4gwqhoscf.us-east-1.rds.amazonaws.com'
     username='admin'
-    password='test1234'
-    database='cis2368su26'
+    password='Baseball2112'
+    database='CIS2368'
+
+
