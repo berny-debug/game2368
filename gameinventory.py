@@ -46,30 +46,31 @@ def output_all_games():
     for game in games:
         print(f"ID: {game['id']}, Name: {game['gamename']}, Max Players: {game['maxplayers']}, Result: {game['result']}, Duration: {game['gameduration']} mins, Max Score: {game['maxscore']}")
 
-    def main_menu():
-        while true:
-            print("/n" + "="*40)
-            print("Board Game Inventory Management")
-            print("="*40)
-            print("a - Add New Game")
-            print("o - Output All Games")
-            print("q - Quit")
-            print("="*40)
-            choice = input("Enter your choice: (a/o/q): ").strip().lower()
+def main_menu():
+    while True:
+        print("\n" + "="*40)
+        print("Board Game Inventory Management")
+        print("="*40)
+        print("a - Add New Game")
+        print("o - Output All Games")
+        print("q - Quit")
+        print("="*40)
+        choice = input("Enter your choice: (a/o/q): ").strip().lower()
 
-            if choice == 'a':
-                add_game()
-            elif choice == 'o':
-                output_all_games()
-            elif choice == 'q':
-                print("Exiting the program. Goodbye!")
-                break
-            else:
-                print("Invalid choice. Please try again.")
+        if choice == 'a':
+            add_game()
+        elif choice == 'o':
+            output_all_games()
+        elif choice == 'q':
+            print("Exiting the program. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please try again.")
 
-    if __name__ == "__main__":
-        print("Welcome to the Board Game Inventory Management System!")
-        main_menu()
+
+if __name__ == "__main__":
+    print("Welcome to the Board Game Inventory Management System!")
+    main_menu()
 
 
 
